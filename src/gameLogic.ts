@@ -1,16 +1,20 @@
-angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('gameLogic', function () {
-  'use strict';
-  function isEqual(object1, object2) {
+//angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('gameLogic', function () {
+//  'use strict';
+
+  module gameLogic {
+
+
+  export function isEqual(object1:any, object2:any) {
     return angular.equals(object1, object2);
   }
 
-  function copyObject(object) {
+  export function copyObject(object:any) {
     return angular.copy(object);
   }
 
-  function getInitialBoard(){
+  export function getInitialBoard(){
 
-  	var i,j,board=[];
+  	var i:any,j:any,board:any=[];
 
     for(i=0;i<10;i+=1)
       {
@@ -27,7 +31,7 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('ga
     return board;
     }
 
-  function init(){
+  export function init(){
 
     var board = getInitialBoard();
     return {'turnInfo':{ctr:2,pawn:'A'},'pawnDelta':{row:'',col:''},'board':board};
@@ -35,8 +39,8 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('ga
   }
 
 //function to check if the pawn at i,j can make valid move and return 1 if true else 0
-  function canMove(i,j,board){
-    var loop = {rowFrom:0,rowTo:0,colFrom:0,colTo:0}, x, y;
+  export function canMove(i:any,j:any,board:any){
+    var loop = {rowFrom:0,rowTo:0,colFrom:0,colTo:0}, x:any, y:any;
 
     if(i===0 && j===0){loop = {rowFrom:0,rowTo:1,colFrom:0,colTo:1};}
     else if (i===0 && j===9){loop = {rowFrom:0,rowTo:1,colFrom:8,colTo:9};}
@@ -58,8 +62,8 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('ga
     return 0;
   }
 
-  function getWinner(board,turnIndex){
-    var Actr=0,Bctr=0,i,j;
+  export function getWinner(board:any,turnIndex:any){
+    var Actr=0,Bctr=0,i:any,j:any;
 
     for(i=0;i<10;i+=1){
       for (j=0;j<10;j+=1){
@@ -74,7 +78,7 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('ga
 
   }
 
-  function createMove(pawnPosition, pawnDelta, turnIndexBeforeMove, stateBeforeMove){
+  export function createMove(pawnPosition:any, pawnDelta:any, turnIndexBeforeMove:any, stateBeforeMove:any){
 
   	if(stateBeforeMove==="{}")
   	{
@@ -95,8 +99,8 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('ga
     	newTurnInfo = turnInfo,
         pp = pawnPosition,
         pd = pawnDelta,
-        winner,
-        result;
+        winner:any,
+        result:any;
 
 
     var boardAfterMove = copyObject(board);
@@ -169,9 +173,9 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('ga
 
   }
 
-  function horizontalMoveCheck(pos1,pos2,board){
+  export function horizontalMoveCheck(pos1:any,pos2:any,board:any){
 
-    var i,greaterpos,lesserpos;
+    var i:any,greaterpos:any,lesserpos:any;
     if(Math.abs(pos1.row - pos2.row) === 0){
       if(pos2.col > pos1.col){
         greaterpos = pos2;
@@ -199,9 +203,9 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('ga
     return true;
   }											//check to see if move is horizontal, and if all squares between current
                                               //position and new position are unoccupied
-  function verticalMoveCheck(pos1,pos2,board){
+  export function verticalMoveCheck(pos1:any,pos2:any,board:any){
 
-    var greaterpos,lesserpos,i;
+    var greaterpos:any,lesserpos:any,i:any;
     if(Math.abs(pos1.col - pos2.col) === 0){
       if(pos2.row > pos1.row){
         greaterpos = pos2;
@@ -228,9 +232,9 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('ga
     return true;
   }
 
-  function diagonalMoveCheck(pos1,pos2,board){
+  export function diagonalMoveCheck(pos1:any,pos2:any,board:any){
 
-    var greaterpos,lesserpos,i,j;
+    var greaterpos:any,lesserpos:any,i:any,j:any;
     if(Math.abs(pos1.row - pos2.row) === Math.abs(pos1.col - pos2.col)){
       greaterpos = pos2;
       lesserpos = pos1;
@@ -282,7 +286,7 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('ga
     return true;
 }
 
-  function getExampleGame(){
+  export function getExampleGame(){
   	var game = [
   				  {
   				   turnIndexBeforeMove:{turnIndex:0},
@@ -437,7 +441,7 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('ga
     return game;
   }
 
-  function getRiddles(){
+  export function getRiddles(){
   	var riddles = [	{
   					 turnIndexBeforeMove:{turnIndex:1},
   					 stateBeforeMove:{ turnInfo:{ctr:2,pawn:'B'},
@@ -505,13 +509,13 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('ga
         return riddles;
     }
 
-  function createComputerMove(stateBeforeMove, turnIndexBeforeMove){
+  export function createComputerMove(stateBeforeMove:any, turnIndexBeforeMove:any){
   	var temp = angular.fromJson(stateBeforeMove);
   	stateBeforeMove = temp;
-  	var pawnPosList = [];
-  	var pawnDelList = {'1':[],'2':[],'3':[],'4':[]};
-  	var pawnPosition,pawnDelta;
-  	var i,j,index=1;
+  	var pawnPosList:any = [];
+  	var pawnDelList:any = {'1':[],'2':[],'3':[],'4':[]};
+  	var pawnPosition:any,pawnDelta:any;
+  	var i:any,j:any,index=1;
   	var board = stateBeforeMove.board;
   	var turnInfo = stateBeforeMove.turnInfo;
 
@@ -587,7 +591,7 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('ga
   		index+=1;
   	}
 
-    var pawnNumber, listLen, pawnDelNumber, tempArray;
+    var pawnNumber:any, listLen:any, pawnDelNumber:any, tempArray:any;
     while(1){
             if(turnInfo.ctr===2){
   	             pawnNumber = Math.floor((Math.random()*4)+1);	//get number between 1 and 4
@@ -612,11 +616,11 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('ga
   	return randomMove;
   }
 
-  function isMoveOk(params){
+  export function isMoveOk(params:any){
 	var move = params.move,
     turnIndexBeforeMove = params.turnIndexBeforeMove,
     stateBeforeMove = params.stateBeforeMove,
-    expectedMove,
+    expectedMove:any,
     board = stateBeforeMove.board;
 
 //    console.log(params)
@@ -658,19 +662,20 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('ga
 	{
 	//	console.log(x);
 		return false;
+	} 
 	}
-	}
+}
+angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices']).factory('gameLogic', function () {
 
   return {
-    isMoveOk : isMoveOk,
-    createMove : createMove,
-    createComputerMove : createComputerMove,
-    getInitialBoard : getInitialBoard,
-    getExampleGame : getExampleGame,
-    getRiddles : getRiddles,
-    horizontalMoveCheck : horizontalMoveCheck,
-    verticalMoveCheck : verticalMoveCheck,
-    diagonalMoveCheck : diagonalMoveCheck,
+    isMoveOk : gameLogic.isMoveOk,
+    createMove : gameLogic.createMove,
+    createComputerMove : gameLogic.createComputerMove,
+    getInitialBoard : gameLogic.getInitialBoard,
+    getExampleGame : gameLogic.getExampleGame,
+    getRiddles : gameLogic.getRiddles,
+    horizontalMoveCheck : gameLogic.horizontalMoveCheck,
+    verticalMoveCheck : gameLogic.verticalMoveCheck,
+    diagonalMoveCheck : gameLogic.diagonalMoveCheck,
   };
-
 });

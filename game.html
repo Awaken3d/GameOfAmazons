@@ -25,20 +25,21 @@
   <!-- /build -->
 
   <!-- build:js dist/everything.min.js -->
-  <script crossorigin="anonymous" src="gameLogic.js"></script>
-  <script crossorigin="anonymous" src="game.js"></script>
+  <script src="ts_output_readonly_do_NOT_change_manually/src/gameLogic.js"></script>
+  <script src="ts_output_readonly_do_NOT_change_manually/src/game.js"></script>
   <!-- /build -->
 
-  <script>window.angularTranslationLanguages = ['en', 'zh'];</script>
+  <!--<script>window.angularTranslationLanguages = ['en', 'zh'];</script>-->
 
   <!-- build:js http://yoav-zibin.github.io/emulator/dist/turnBasedServices.2.min.js -->
-  <script crossorigin="anonymous" src="http://yoav-zibin.github.io/emulator/dist/turnBasedServices.2.js"></script>
+  <script crossorigin="anonymous" src="http://yoav-zibin.github.io/emulator/dist/turnBasedServices.3.js"></script>
   <!-- /build -->
 
   <link rel="stylesheet" type="text/css" href="http://yoav-zibin.github.io/emulator/main.css">
   <link rel="stylesheet" type="text/css" href="game.css">
 </head>
-<body ng-cloak ng-controller="Ctrl">
+<!--<body ng-cloak ng-controller="Ctrl">-->
+  <body ng-cloak>
 
   <div style="position:absolute; bottom:5px; left: 5px; z-index:10;">
     <span ng-click="isHelpModalShown = true"
@@ -61,7 +62,7 @@
               <table>
                 <tr>
                   <td>
-                    {{ 'RULES_SLIDE0' | translate }}
+                    {{ 'RULES_SLIDE0'  | translate}}
                   </td>
                   <td>
                     <img src="imgs/HelpSlide0.png" style="height:48%;">
@@ -97,7 +98,7 @@
               <table>
                 <tr>
                   <td>
-                    {{ 'RULES_SLIDE3' | translate }}
+                    {{ 'RULES_SLIDE3'  | translate}}
                   </td>
                   <td>
                     <img src="imgs/HelpSlide3.png" style="height:48%;">
@@ -134,23 +135,23 @@
       <circle cx="50%" cy="50%" r="20%" stroke="black" stroke-width="1%" fill="black" />
   </svg>
 
-    <div ng-repeat="row in rows"
+    <div ng-repeat="row in game.rows"
         style="position:absolute; top:{{row * 10}}%; left:0; width:100%; height:10%;">
-      <div ng-repeat="col in cols"
+      <div ng-repeat="col in game.cols"
           style="position:absolute; top:0; left:{{col * 10}}%; width:10%; height:100%;"
           id="{{'div_' + row + 'x' + col}}"
           ng-class="{o:row%2===col%2, e:row%2!==col%2}">
 
-          <img src="imgs/QW.png" ng-class="{pawnWselect:isWTurn(), pawnTurn:isSelected(row, col)}"
+          <img src="imgs/QW.png" ng-class="{pawnWselect:game.isWTurn(), pawnTurn:game.isSelected(row, col)}"
             style="width: 100%; height: 100%; position: absolute"
-      	    ng-show="isPawn(row, col,'A')" id="{{'pieceA_' + row + 'x' + col}}"/>
+      	    ng-show="game.isPawn(row, col,'A')" id="{{'pieceA_' + row + 'x' + col}}"/>
 
-          <img src="imgs/QB.png" ng-class="{pawnWselect:isBTurn(), pawnTurn:isSelected(row, col)}"
+          <img src="imgs/QB.png" ng-class="{pawnWselect:game.isBTurn(), pawnTurn:game.isSelected(row, col)}"
             style="width: 100%; height: 100%; position: absolute"
-            ng-show="isPawn(row, col,'B')" id="{{'pieceB_' + row + 'x' + col}}"/>
+            ng-show="game.isPawn(row, col,'B')" id="{{'pieceB_' + row + 'x' + col}}"/>
 
           <svg id="{{'pieceX_' + row + 'x' + col}}" width="100%" height="100%"
-            style="position:absolute;" ng-show="isPawn(row, col,'X')" ng-class="{arrow:true}">
+            style="position:absolute;" ng-show="game.isPawn(row, col,'X')" ng-class="{arrow:true}">
               <circle cx="50%" cy="50%" r="20%" stroke="black" stroke-width="1%" fill="black" />
           </svg>
       </div>
